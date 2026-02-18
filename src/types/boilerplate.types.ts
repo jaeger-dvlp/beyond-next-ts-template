@@ -1,5 +1,6 @@
-import { IconType } from 'react-icons';
-import { Axios } from 'axios';
+import type { Axios } from 'axios';
+import type React from 'react';
+import type { IconType } from 'react-icons';
 
 // ! Global Types
 
@@ -20,7 +21,7 @@ export interface NavbarLink {
 
 export interface MobileMenuProps {
   isActive: boolean;
-  children: JSX.Element[];
+  children: React.JSX.Element[];
 }
 
 export interface FooterSocialLink {

@@ -1,13 +1,13 @@
-import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 
 import Logo from '@/public/assets/img/beyond.png';
-import {
-  NavbarLink,
+import type {
   MobileMenuProps,
   NavbarClass,
+  NavbarLink,
 } from '@/types/boilerplate.types';
 
 const ClassNames: NavbarClass = {
@@ -15,19 +15,22 @@ const ClassNames: NavbarClass = {
   mobile: 'text-white',
 };
 
-function MobileMenu({ isActive, children }: MobileMenuProps): JSX.Element {
+function MobileMenu({
+  isActive,
+  children,
+}: MobileMenuProps): React.JSX.Element {
   return (
     <div
-      className={`${isActive ? 'translate-x-0' : 'translate-x-full'} fixed top-0 left-0 z-[49] flex h-full w-full flex-col items-center justify-start bg-zinc-500 px-5 transition-all duration-500 lg:hidden`}
+      className={`${isActive ? 'translate-x-0' : 'translate-x-full'} fixed top-0 left-0 z-49 flex h-full w-full flex-col items-center justify-start bg-zinc-500 px-5 transition-all duration-500 lg:hidden`}
     >
-      <ul className="flex h-full w-full flex-col items-center justify-center gap-10 overflow-y-auto py-[150px]">
+      <ul className="flex h-full w-full flex-col items-center justify-center gap-10 overflow-y-auto py-37.5">
         {children}
       </ul>
     </div>
   );
 }
 
-export default function Navbar(): JSX.Element {
+export default function Navbar(): React.JSX.Element {
   const Router = useRouter();
   const t = (name: string) => name;
   const [mobileMenu, setMobileMenu] = React.useState<boolean>(false);
@@ -41,7 +44,7 @@ export default function Navbar(): JSX.Element {
     },
   ];
 
-  const getDesktopElements = (): JSX.Element[] => {
+  const getDesktopElements = (): React.JSX.Element[] => {
     const elements = HeaderLinks.map(
       ({ url, name, id, classNames: { desktop: className }, external }) => (
         <li key={`d-elm-${id}`}>
@@ -66,7 +69,7 @@ export default function Navbar(): JSX.Element {
     return elements;
   };
 
-  const getMobileElements = (): JSX.Element[] => {
+  const getMobileElements = (): React.JSX.Element[] => {
     const elements = HeaderLinks.map(
       ({ url, name, id, classNames: { mobile: className }, external }) => (
         <li key={`m-elm-${id}`}>
@@ -106,9 +109,9 @@ export default function Navbar(): JSX.Element {
   }, [Router]);
 
   return (
-    <header className="font-theme fixed top-0 left-0 z-[10] flex min-h-[100px] w-full items-center justify-center bg-zinc-300">
+    <header className="font-theme fixed top-0 left-0 z-10 flex min-h-25 w-full items-center justify-center bg-zinc-300">
       <section className="max-w-theme flex w-full flex-wrap items-center justify-between gap-5 p-5">
-        <Link href="/" className="relative z-[50]">
+        <Link href="/" className="relative z-50">
           <img
             alt="Logo"
             src={Logo.src}
@@ -123,7 +126,7 @@ export default function Navbar(): JSX.Element {
         <button
           type="button"
           onClick={() => setMobileMenu(!mobileMenu)}
-          className="z-[100] flex max-w-fit items-center justify-center lg:hidden"
+          className="z-100 flex max-w-fit items-center justify-center lg:hidden"
         >
           <HiOutlineMenuAlt3
             className={`${

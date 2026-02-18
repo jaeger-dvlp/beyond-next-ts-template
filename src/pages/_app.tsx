@@ -1,11 +1,12 @@
-import React from 'react';
-import type { AppProps } from 'next/app';
-import PopupWrapper from '@/contexts/Popup.context';
-import AlertPopup from '@/components/popups/Alert.popup';
-import ConfirmPopup from '@/components/popups/Confirm.popup';
-
 // ? Global styles
 import '@/styles/globals.css';
+
+import type { AppProps } from 'next/app';
+import React from 'react';
+
+import AlertPopup from '@/components/popups/Alert.popup';
+import ConfirmPopup from '@/components/popups/Confirm.popup';
+import PopupWrapper from '@/contexts/Popup.context';
 
 // * Local font implementation with @next/font/local - #1
 //
@@ -29,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* 
       //* Local font implementation with @next/font/local - #2
       //? eslint-disable-next-line react/no-unknown-property 
-      //  <style jsx global> 
+      //  <style React.JSX global> 
       //  {`
       //     :root {
       //       --font-poppins: ${Inter.style.fontFamily};

@@ -1,10 +1,11 @@
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
 import { BsInstagram } from 'react-icons/bs';
-import Logo from '@/public/assets/img/beyond.png';
-import { FooterSocialLink } from '@/types/boilerplate.types';
 
-function Footer(): JSX.Element {
+import Logo from '@/public/assets/img/beyond.png';
+import type { FooterSocialLink } from '@/types/boilerplate.types';
+
+function Footer(): React.JSX.Element {
   const FooterSocialLinks: FooterSocialLink[] = [
     {
       id: 0,
@@ -14,7 +15,7 @@ function Footer(): JSX.Element {
     },
   ];
 
-  const getSocialLinks = (): JSX.Element[] => {
+  const getSocialLinks = (): React.JSX.Element[] => {
     const elements = FooterSocialLinks.map(({ id, url, icon: Icon }) => (
       <li key={`fs-elm-${id}`}>
         <a href={url} target="_blank" rel="noreferrer">
@@ -27,7 +28,7 @@ function Footer(): JSX.Element {
   };
 
   return (
-    <footer className="m-0 flex min-h-[100px] w-full flex-wrap items-center justify-center bg-zinc-300 p-0">
+    <footer className="m-0 flex min-h-25 w-full flex-wrap items-center justify-center bg-zinc-300 p-0">
       <section className="max-w-theme flex w-full flex-wrap items-center justify-between p-5">
         <Link href="/" className="relative">
           <img

@@ -1,111 +1,78 @@
-import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
-import react from 'eslint-plugin-react';
 import prettier from 'eslint-plugin-prettier';
-import reactHooks from 'eslint-plugin-react-hooks';
-import unusedImports from 'eslint-plugin-unused-imports';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import globals from 'globals';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 import tsParser from '@typescript-eslint/parser';
+import { defineConfig, globalIgnores } from '@eslint/config-helpers';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
 
-export default [
+export default defineConfig(
+  ...nextVitals,
+  ...nextTs,
+
+  globalIgnores([
+    '**/.next/**',
+    '**/node_modules/**',
+    '**/public/**',
+    '**/.vercel/**',
+    '**/.git/**',
+    '**/**.config.*',
+    '**/eslint.config.*',
+  ]),
+
   {
-    ignores: [
-      '**/next.config.js',
-      '**/postcss.config.js',
-      '**/tailwind.config.js',
-      '**/next-sitemap.config.js',
-      '**/next-i18next.config.js',
-      '**/eslint.config.mjs',
-      '**/**.config.js',
-      '**/**.config.mjs',
-      '**/.next/**',
-      '**/public/**',
-      '**/node_modules/**',
-      '**/.git/**',
-      '**/.vercel/**',
-    ],
-  },
-  ...fixupConfigRules(
-    compat.extends(
-      'next',
-      'airbnb',
-      'airbnb-typescript',
-      'next/core-web-vitals',
-      'plugin:react/recommended',
-      'plugin:import/typescript',
-      'plugin:prettier/recommended',
-    ),
-  ),
-  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
-      react: fixupPluginRules(react),
-      prettier: fixupPluginRules(prettier),
-      'react-hooks': fixupPluginRules(reactHooks),
-      'unused-imports': unusedImports,
+      prettier,
       'simple-import-sort': simpleImportSort,
     },
-
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-      },
-
-      parser: tsParser,
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-
-        tsconfigRootDir: '.',
-        project: ['tsconfig.json'],
-        createDefaultProgram: true,
-      },
-    },
-
-    settings: {
-      react: {
-        version: 'detect',
-      },
-
-      'import/resolver': {
-        typescript: {
-          '@': ['./src'],
-        },
-
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-          paths: ['./src'],
-          moduleDirectory: ['node_modules', 'src/'],
-
-          alias: {
-            '@': './src',
-          },
-        },
-      },
-    },
-
     rules: {
       '@next/next/no-img-element': 'off',
-      'react-hooks/exhaustive-deps': 'off',
-      'react/jsx-props-no-spreading': 'off',
-      'import/no-extraneous-dependencies': 'off',
-      '@typescript-eslint/lines-between-class-members': 'off',
-      '@typescript-eslint/no-throw-literal': 'off',
+
+      'simple-import-sort/imports': 'warn',
+      'simple-import-sort/exports': 'warn',
+      'prettier/prettier': 'warn',
+
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': 'warn',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+
+      'react/jsx-key': 'error',
+      'react/no-array-index-key': 'warn',
+      'react/jsx-no-useless-fragment': 'warn',
+      'react/self-closing-comp': 'warn',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
     },
   },
-];
+
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: __dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-misused-promises': 'error',
+    },
+  },
+);

@@ -1,14 +1,15 @@
 import React from 'react';
+
+import Footer from '@/components/layout/Footer';
 import Meta from '@/components/layout/Meta';
 import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 
-export default function Home(): JSX.Element {
+export default function Home(): React.JSX.Element {
   return (
     <>
       <Meta title=".." description=".." />
       <Navbar />
-      <main className="flex min-h-screen items-center justify-center pt-[150px]">
+      <main className="flex min-h-screen items-center justify-center pt-37.5">
         Hello world.
       </main>
       <Footer />
