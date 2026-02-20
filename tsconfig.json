@@ -26,5 +26,11 @@
     "incremental": true
   },
   "exclude": ["./out/**/*", "./node_modules/**/*", "eslint.config.mjs"],
-  "include": ["next-env.d.ts", "./**/*.ts", "./**/*.tsx", "./global.d.ts"]
+  "include": [
+    "next-env.d.ts",
+    "./**/*.ts",
+    "./**/*.tsx",
+    "./global.d.ts",
+    "next-i18next.config.js"
+  ]
 }

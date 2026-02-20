@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 import React from 'react';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 
@@ -14,6 +15,15 @@ const ClassNames: NavbarClass = {
   desktop: 'text-black',
   mobile: 'text-white',
 };
+
+const navbarLinks: NavbarLink[] = [
+  {
+    id: 0,
+    name: 'navbar.home',
+    url: '/',
+    classNames: ClassNames,
+  },
+];
 
 function MobileMenu({
   isActive,
@@ -32,20 +42,11 @@ function MobileMenu({
 
 export default function Navbar(): React.JSX.Element {
   const Router = useRouter();
-  const t = (name: string) => name;
+  const { t } = useTranslation();
   const [mobileMenu, setMobileMenu] = React.useState<boolean>(false);
 
-  const HeaderLinks: NavbarLink[] = [
-    {
-      id: 0,
-      name: 'header.home',
-      url: '/',
-      classNames: ClassNames,
-    },
-  ];
-
   const getDesktopElements = (): React.JSX.Element[] => {
-    const elements = HeaderLinks.map(
+    const elements = navbarLinks.map(
       ({ url, name, id, classNames: { desktop: className }, external }) => (
         <li key={`d-elm-${id}`}>
           {external ? (
@@ -70,7 +71,7 @@ export default function Navbar(): React.JSX.Element {
   };
 
   const getMobileElements = (): React.JSX.Element[] => {
-    const elements = HeaderLinks.map(
+    const elements = navbarLinks.map(
       ({ url, name, id, classNames: { mobile: className }, external }) => (
         <li key={`m-elm-${id}`}>
           {external ? (
